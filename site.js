@@ -10,8 +10,8 @@
 
   // ---- shared constants -----------------------------------------------------
   var BOOK_URL = "https://www.axischirowi.com/patient-form/";
-  var PHONE = "(262) 203-9036";
-  var TEL = "tel:+12622039036";
+  var PHONE = "XXX-XXX-XXXX";
+  var TEL = "#";
   var EMAIL = "frontdesk@axischirowi.com";
   // Formspree form endpoint, e.g. "https://formspree.io/f/abcdwxyz".
   // Both forms post here; the "form-name" field says which one it was.
