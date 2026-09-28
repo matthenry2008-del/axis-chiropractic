@@ -550,16 +550,17 @@ textarea.field { resize: vertical; min-height: 96px; }
 .about-bio { font-size: 16.5px; line-height: 1.7; color: rgba(18, 42, 62, .78); max-width: 58ch; }
 .about-bio + .about-bio { margin-top: 16px; }
 .credstrip {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   margin: 36px 6px 6px 0;
   background: #fff;
   border: 2px solid var(--ink);
   border-radius: 14px;
   box-shadow: 6px 6px 0 var(--blue-light);
 }
-.cred { flex: 1 1 0; padding: 20px 24px; border-left: 1.5px solid rgba(18, 42, 62, .25); }
-.cred:first-child { border-left: 0; }
+.cred { padding: 20px 24px; }
+.cred:nth-child(even) { border-left: 1.5px solid rgba(18, 42, 62, .25); }
+.cred:nth-child(n+3) { border-top: 1.5px solid rgba(18, 42, 62, .25); }
 .cred .n { font-family: var(--serif); font-size: 27px; font-weight: 600; }
 /* short red rule under each credential, echoing the logo lockup */
 .cred .n::after { content: ""; display: block; width: 22px; height: 2px; background: var(--red); margin: 6px 0 4px; }
@@ -798,7 +799,7 @@ textarea.field { resize: vertical; min-height: 96px; }
   .about-bio { text-align: left; font-size: 14.5px; line-height: 1.65; max-width: none; }
   .portrait-lg { width: 140px; height: 140px; }
   .credstrip { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 22px 4px 4px 0; background: none; border: 0; border-radius: 0; box-shadow: none; }
-  .cred, .cred:first-child { padding: 14px; border: 2px solid var(--ink); border-radius: 11px; background: #fff; text-align: center; box-shadow: 4px 4px 0 var(--blue-light); }
+  .cred, .cred:nth-child(n) { padding: 14px; border: 2px solid var(--ink); border-radius: 11px; background: #fff; text-align: center; box-shadow: 4px 4px 0 var(--blue-light); }
   .cred .n { font-size: 22px; }
   .cred .n::after { margin: 5px auto 3px; }
   .cred .l { font-size: 11.5px; }
