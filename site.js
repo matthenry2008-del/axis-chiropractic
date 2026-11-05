@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Axis Chiropractic — shared site behavior
+   Axis Chiropractic, shared site behavior
    - injects header (utility bar + nav), footer, and mobile sticky bar
    - mobile hamburger menu
    - dynamic "Open today" status from real per-day hours
@@ -59,15 +59,10 @@
     return { status: "Closed now", hours: label };
   }
 
-  // ---- logo lockup markup ---------------------------------------------------
-  function lockup() {
-    return (
-      '<span class="lockup" aria-label="Axis Chiropractic">' +
-      '<span class="word">AXIS</span>' +
-      '<span class="rule"></span>' +
-      '<span class="sub">CHIROPRACTIC</span>' +
-      "</span>"
-    );
+  // ---- logo ---------------------------------------------------------------
+  // The real logo file: white AXIS on black with the red rule.
+  function logo() {
+    return '<img src="assets/axis-logo.png" alt="Axis Chiropractic" width="522" height="229">';
   }
 
   var NAV = [
@@ -78,38 +73,40 @@
     { key: "contact", label: "Contact", href: "contact.html" }
   ];
 
+  function statusMarkup(st) {
+    return "<b>" + st.status + "</b>" + (st.hours ? ", " + st.hours : "");
+  }
+
   function buildHeader(active) {
-    var now = new Date();
-    var st = openStatus(now, false);
-    var statusText = st.hours ? st.status + " · " + st.hours : st.status;
+    var st = openStatus(new Date(), false);
 
     var links = NAV.map(function (n) {
+      var cur = n.key === active;
       return (
-        '<a class="navlink' + (n.key === active ? " is-active" : "") + '" href="' + n.href + '">' +
-        n.label + "</a>"
+        '<a class="navlink' + (cur ? " is-active" : "") + '" href="' + n.href + '"' +
+        (cur ? ' aria-current="page"' : "") + ">" + n.label + "</a>"
       );
     }).join("");
 
     var drawerLinks = NAV.map(function (n) {
+      var cur = n.key === active;
       return (
-        '<a class="' + (n.key === active ? "is-active" : "") + '" href="' + n.href + '">' +
-        n.label + "</a>"
+        '<a class="' + (cur ? "is-active" : "") + '" href="' + n.href + '"' +
+        (cur ? ' aria-current="page"' : "") + ">" + n.label + "</a>"
       );
     }).join("");
 
     return (
-      '<div class="util-bar"><div class="wrap">' +
-        '<div class="util-left">' +
-          '<span class="util-status">' + statusText + "</span>" +
-          '<span class="util-addr">' + "W359 N5002 Brown St #220A, Oconomowoc</span>" +
-        "</div>" +
-        '<a class="util-phone" href="' + TEL + '">' + PHONE + "</a>" +
+      '<div class="topline"><div class="wrap">' +
+        '<div><span class="topline-status">' + statusMarkup(st) + "</span>" +
+          '<span class="topline-addr">&nbsp;&nbsp;|&nbsp;&nbsp;W359 N5002 Brown St #220A, Oconomowoc</span></div>' +
+        '<a class="topline-phone" href="' + TEL + '">' + PHONE + "</a>" +
       "</div></div>" +
 
       '<nav class="nav" aria-label="Primary"><div class="wrap">' +
-        '<a href="index.html" aria-label="Axis Chiropractic home">' + lockup() + "</a>" +
+        '<a class="logo" href="index.html">' + logo() + "</a>" +
         '<div class="nav-links">' + links +
-          '<a class="btn btn--navy btn--sm" href="' + BOOK_URL + '">Book an appointment</a>' +
+          '<a class="btn btn--light btn--sm" href="' + BOOK_URL + '">Book an appointment</a>' +
         "</div>" +
         '<button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="drawer">' +
           "<span></span><span></span><span></span>" +
@@ -117,7 +114,7 @@
       "</div></nav>" +
 
       '<div class="drawer" id="drawer">' + drawerLinks +
-        '<a class="btn btn--navy" href="' + BOOK_URL + '">Book an appointment</a>' +
+        '<a class="btn btn--light" href="' + BOOK_URL + '">Book an appointment</a>' +
       "</div>"
     );
   }
@@ -125,9 +122,8 @@
   function buildFooter() {
     return (
       '<div class="wrap">' +
-        '<a href="index.html" aria-label="Axis Chiropractic home">' + lockup() + "</a>" +
-        '<div class="footer-addr">' + ADDRESS + " · " +
-          '<a href="mailto:' + EMAIL + '">' + EMAIL + "</a></div>" +
+        '<a class="logo" href="index.html">' + logo() + "</a>" +
+        "<div>" + ADDRESS + '<br><a href="mailto:' + EMAIL + '">' + EMAIL + "</a></div>" +
         '<a class="footer-book" href="' + BOOK_URL + '">Book an appointment</a>' +
       "</div>"
     );
@@ -135,8 +131,8 @@
 
   function buildMobileBar() {
     return (
-      '<a class="btn btn--navy book" href="' + BOOK_URL + '">Book now</a>' +
-      '<a class="btn btn--outline call" href="' + TEL + '">Call</a>'
+      '<a class="btn btn--dark" href="' + BOOK_URL + '">Book now</a>' +
+      '<a class="btn btn--red" href="' + TEL + '">Call</a>'
     );
   }
 
@@ -146,6 +142,11 @@
 
     var header = document.getElementById("site-header");
     if (header) header.innerHTML = buildHeader(active);
+
+    // live open/closed status wherever the page asks for it
+    document.querySelectorAll("[data-open-status]").forEach(function (el) {
+      el.innerHTML = statusMarkup(openStatus(new Date(), false));
+    });
 
     var footer = document.getElementById("site-footer");
     if (footer) {

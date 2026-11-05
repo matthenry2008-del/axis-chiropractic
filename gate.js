@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Axis Chiropractic — demo password screen
+   Axis Chiropractic, demo password screen
    Keeps casual visitors out of the demo. This is NOT real security: the site
    files are still publicly readable. Load in <head>, before styles render.
    ========================================================================== */
@@ -21,16 +21,18 @@
   hide.textContent =
     "body > *:not(#demo-gate){display:none !important}" +
     "#demo-gate{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;" +
-    "padding:16px;background:#FBFCFD;font-family:'Instrument Sans',system-ui,sans-serif;color:#122A3E;z-index:2147483647}" +
-    "#demo-gate form{width:100%;max-width:360px;text-align:center}" +
-    "#demo-gate .logo{font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;font-weight:600;letter-spacing:.3em;margin-right:-.3em}" +
-    "#demo-gate p{font-size:14px;color:rgba(18,42,62,.65);margin:10px 0 22px}" +
-    "#demo-gate input{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:12px 14px;" +
-    "border:1.5px solid rgba(18,42,62,.24);border-radius:10px;background:#fff;color:inherit}" +
-    "#demo-gate input:focus{outline:2px solid #1F6FB2;outline-offset:1px}" +
-    "#demo-gate button{width:100%;margin-top:10px;font:inherit;font-weight:700;font-size:15px;padding:12px;" +
-    "border:0;border-radius:10px;background:#1F6FB2;color:#fff;cursor:pointer}" +
-    "#demo-gate .err{min-height:20px;margin-top:10px;font-size:13.5px;color:#B3261E}";
+    "padding:16px;background:#000;font-family:Archivo,'Helvetica Neue',Arial,sans-serif;color:#e9eae7;z-index:2147483647}" +
+    "#demo-gate form{width:100%;max-width:360px}" +
+    "#demo-gate img{width:180px;height:auto;margin:0 0 28px}" +
+    "#demo-gate p{font-size:16px;line-height:1.5;color:#a9adaf;margin:0 0 20px}" +
+    "#demo-gate label{display:block;font-weight:650;font-size:15px;color:#fff;margin-bottom:6px}" +
+    "#demo-gate input{width:100%;box-sizing:border-box;font:inherit;font-size:17px;padding:12px 14px;min-height:50px;" +
+    "border:1.5px solid #767c80;border-radius:4px;background:#fff;color:#191c1e}" +
+    "#demo-gate input:focus{outline:3px solid #fff;outline-offset:2px}" +
+    "#demo-gate button{width:100%;margin-top:12px;font:inherit;font-weight:650;font-size:16px;min-height:50px;" +
+    "border:0;border-radius:4px;background:#fff;color:#000;cursor:pointer}" +
+    "#demo-gate button:focus-visible{outline:3px solid #d01117;outline-offset:3px}" +
+    "#demo-gate .err{min-height:22px;margin-top:12px;font-size:15px;font-weight:600;color:#ff8a8f}";
   document.head.appendChild(hide);
 
   function sha256Hex(text) {
@@ -46,9 +48,10 @@
     gate.id = "demo-gate";
     gate.innerHTML =
       '<form autocomplete="off">' +
-      '<div class="logo">AXIS</div>' +
+      '<img src="assets/axis-logo.png" alt="Axis Chiropractic">' +
       '<p>This is a private preview. Enter the password to continue.</p>' +
-      '<input type="password" aria-label="Password" placeholder="Password" required>' +
+      '<label for="demo-pw">Password</label>' +
+      '<input id="demo-pw" type="password" required>' +
       '<button type="submit">View site</button>' +
       '<div class="err" role="alert"></div>' +
       "</form>";
